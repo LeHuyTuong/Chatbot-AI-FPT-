@@ -6,6 +6,10 @@
 ## 🚀 Objective
 Build a Retrieval-Augmented Generation (RAG) pipeline using FPT University 2025 admission data — completely **local**, with no OpenAI dependency.
 
+## OUTPUT
+![image](https://github.com/user-attachments/assets/f6fad3f7-cd68-482a-af7f-86cb1d88a045)
+
+
 ---
 
 ## ✅ Completed Steps
