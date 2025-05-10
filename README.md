@@ -1,75 +1,127 @@
+# 🧠 FPT University RAG Chatbot (Local LangChain + Chroma + HuggingFace)
 
-# FPT RAG Local Pipeline (LangChain + Chroma + HuggingFace)
+> A fully local Retrieval-Augmented Generation (RAG) pipeline built with 100% open-source tools — no OpenAI key required.
 
-## 📅 Date: 2025-05-10
-
-## 🚀 Objective
-Build a Retrieval-Augmented Generation (RAG) pipeline using FPT University 2025 admission data — completely **local**, with no OpenAI dependency.
-
-## OUTPUT
-![image](https://github.com/user-attachments/assets/f6fad3f7-cd68-482a-af7f-86cb1d88a045)
-
+📅 **Date**: May 10, 2025  
+🛠 **Maintainer**: [Le Huy Tuong](https://github.com/LeHuyTuong)  
+🌐 **Demo**: [Docker Hub](https://hub.docker.com/r/lehuytuong/fpt-rag-app)
 
 ---
 
-## ✅ Completed Steps
+## 🚀 Project Objective
 
-### 1. Document Chunking
-- 📄 Source: `THÔNG TIN ĐẠI HỌC FPT 2025.docx`
-- ✅ Extracted and split into JSONL chunks:
-  - `text`: logical content segment
-  - `metadata`: includes `campus`, `major`, `sub_major`, `scholarship_type`, etc.
-- 🔧 Saved as: `fpt_chunks_enriched.jsonl`
+Build a question-answering chatbot that uses **FPT University 2025 admission data** via semantic search on vector embeddings. Fully offline and dockerized.
 
 ---
 
-### 2. Environment Setup
-- Used **Linux VPS**
-- Installed Python, virtualenv, and required packages:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install langchain langchain-community chromadb sentence-transformers
-```
+## ✅ Features
+
+- 📄 Document parsing and metadata-enriched chunking
+- 🧠 Embedding via HuggingFace (`sentence-transformers/all-MiniLM-L6-v2`)
+- 🗃️ Vector store via `Chroma`
+- 🖥️ Terminal + Web UI (Gradio)
+- 🐳 Docker-ready deployment
 
 ---
 
-### 3. Embedding & Vector Storage
-- ✅ Bypassed OpenAI due to quota limits
-- 📦 Used HuggingFace model: `all-MiniLM-L6-v2`
-- 🧠 Persisted into Chroma vector store (`./vector_db`)
-- Run via `ingest_fpt_data.py`
-
----
-
-### 4. RAG-style Query Interface
-- Built `query_rag.py` for terminal-based questions
-- Returns top 5 most similar text chunks (`k=5`)
-- ✅ Merged text output for readability
-- ✅ Displayed associated metadata for each chunk
-
----
-
-## 📂 Project Structure
+## 📂 Folder Structure
 
 ```
 fpt_rag/
-├── fpt_chunks_enriched.jsonl
-├── ingest_fpt_data.py
-├── query_rag.py
-├── vector_db/            # auto-generated vector storage
-└── venv/                 # Python virtual environment
+├── app.py                   # Web UI via Gradio
+├── fpt_chunks_enriched.jsonl  # Chunked document with metadata
+├── ingest_fpt_data.py       # Load and embed documents
+├── query_rag.py             # Terminal RAG query interface
+├── requirements.txt
+├── Dockerfile
+└── vector_db/               # Auto-generated vector database
 ```
 
 ---
 
-## ✍️ Suggestions for Improvement
-- Add a local LLM for summarization or response generation
-- Build a web interface using FastAPI or Streamlit
-- Replace Chroma with FAISS or Weaviate for scalability
+## 🛠️ Setup Guide
+
+### 1. Install dependencies
+
+```bash
+sudo apt update
+sudo apt install python3 python3-venv git
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Run the ingestion pipeline
+
+```bash
+python3 ingest_fpt_data.py
+```
+
+This loads `fpt_chunks_enriched.jsonl` and stores embeddings in `vector_db/`.
+
+### 3. Terminal Query Interface
+
+```bash
+python3 query_rag.py
+```
+
+You’ll get the top 5 most relevant chunks with metadata.
+
+### 4. Web Chat UI (Gradio)
+
+```bash
+python3 app.py
+```
+
+Then open `http://localhost:7860` or expose via `ngrok` / public IP.
+
+---
+
+## 🐳 Docker Deployment
+
+### 1. Build the Docker image
+
+```bash
+docker build -t fpt-rag-app .
+```
+
+### 2. Run the container
+
+```bash
+docker run --rm -it -p 7860:7860 fpt-rag-app
+```
+
+---
+
+## 📸 Screenshot
+![Screenshot 2025-05-10 154929](https://github.com/user-attachments/assets/3ed5f6bc-211e-4853-9570-217c546caa11)
+
+```bash
+pip install gradio
+```
+![Screenshot 2025-05-10 182136](https://github.com/user-attachments/assets/6d45daa1-f865-4d52-8576-eb209825c95c)
+
+
+
+---
+
+
+## 💡 Future Enhancements
+
+- ✅ Integrate a local LLM for response generation
+- 🌍 Add multi-language or campus filter in metadata
+- 🔌 Serve as API with FastAPI backend
+- ⚡ Replace Chroma with FAISS/Weaviate for scale
 
 ---
 
 ## 👨‍💻 Credits
-- Project built by: **Le Huy Tuong**
-- Technical guidance: **ChatGPT (LangChain Expert Mode)**
+
+- 👤 Developed by: [Le Huy Tuong](https://github.com/LeHuyTuong)
+- 🤖 AI Assistance: ChatGPT (LangChain + RAG expert mode)
+
+---
+
+## 📝 License
+
+MIT License – Free for use and distribution.
