@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Chroma vector DB
+vector_db/
+
+# Large files
+*.safetensors
+*.pt
+*.onnx
+*.ckpt
+
+# Logs & temp
+*.log
+.DS_Store
+
